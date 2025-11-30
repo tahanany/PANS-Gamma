@@ -1,19 +1,46 @@
 ﻿using System.Reflection.Metadata;
+using System.Xml.Linq;
 namespace Csharpders
 {
     public class Employee
     {
 
-        public string name;
-        public string position;
-        public double salary;
-        public int age;
+        private string name;
+        private string position;
+        private double salary;
+        private int age;
+
+        public string isim
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public string pozisyon
+        {
+            get { return position; }
+            set { position = value; }
+        }
+
+        public double maas
+        {
+            get { return salary; }
+            set { salary = value; }
+        }
+        public int yas
+        {
+            get { return age; }
+            set { age = value; }
+        }
+
+
+
         static int getNum()
         {
 
             Random random = new Random();
-            //int age = random.Next(1, 100);
-            int age = 1111111111;
+            int age = random.Next(1, 100);
+            
             return age;
 
         }
@@ -35,13 +62,21 @@ namespace Csharpders
 
         static void Main(string[] args)
         {
-            
+            List<Employee> employees = new List<Employee>();
+            int NumOfEmployees = 5;
+
+            for (int i = 0; i < NumOfEmployees; i++)
+            {
+                
+                Employee employee = new Employee ("employee"+i.ToString (),"Position"+i.ToString(),10000);
+
+            }                
 
             Employee employee1 = new("Taha", "Computer blabla", 150);
-            Employee employee2 = new("Emir ", "Military", 8888888);
+            Employee employee2 = new("Emir ","Military", 80000);
 
-            Console.WriteLine(employee1.name+" "+employee1.age);
-            Console.WriteLine(employee2.salary);
+            Console.WriteLine("Name: {0} Position:{1} Salary:{2} Age:{3}",employee1.isim, employee1.pozisyon, employee1.maas, employee1.yas);
+            Console.WriteLine(employee2.maas);
         }
 
     }

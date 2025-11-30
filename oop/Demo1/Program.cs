@@ -4,9 +4,9 @@ namespace OOP_in_Csharp
 {
     public class Computer
     {
-        public string _BIOSname;
-        public string _ipadress;
-        public string _OS;
+        private string _BIOSname;
+        private string _ipadress;
+        private string _OS;
 
         public Computer(string bn, string ip, string os)
         {
@@ -14,33 +14,51 @@ namespace OOP_in_Csharp
             _ipadress = ip;
             _OS = os;
         }
+
+        public string BiosName
+        {
+            get { return _BIOSname; }
+            set { _BIOSname = value; }
+        }
+
+        public string IpAdress
+        {
+            get { return _ipadress; }
+            set { _ipadress = value; }
+        }
+
+        public string OS
+        {
+            get { return _OS; }
+            set { _OS = value; }
+        }
+
     }
 
     class Program
     {
         public static void Main(string[] args)
         {
-            Computer comp1 = new("alfa", "10.0.0.23", "Windows 11");
-            Console.WriteLine(comp1._BIOSname);
+            Computer[] net = new Computer[4];
+
+            for (int i = 0; i < net.Length; i++)
+            {
+                net[i] =
+                  new Computer("comp" + i.ToString(),
+                        "10.0.20" + i.ToString(), "win10");
+            }
+
+            for (int i = 0; i < net.Length; i++)
+            {
+                Console.WriteLine("{0} {1} {2}", net[i].BiosName, net[i].IpAdress, net[i].OS);
+            }
         }
     }
 }
 
 /*
 
-           Computer[] net = new Computer[4];
-
-           for (int i = 0; i < net.Length; i++)
-           {
-               net[i] =
-                 new Computer("comp" + i.ToString(),
-                       "10.0." + getNum() + "." + getNum(), "Win10");
-           }
-
-           for (int i = 0; i < net.Length; i++)
-           {
-               Console.WriteLine("{0} {1}", net[i]._BIOSname, net[i]._ipadress);
-           }
+          
 
            */
 
