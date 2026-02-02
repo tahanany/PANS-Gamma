@@ -1,26 +1,46 @@
 ﻿using System;
-using System.Collections.Generic; // List<T> için
-using System.Linq; // LINQ için
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AnimalApp
 {
-    public class Animals
+    public class Animal
     {
-        private string _name = "";
-        private string _breed = "";
+        private string _name;
         private double _cost;
 
-        public string Name { get; set; }
-        public string Breed { get; set; }
-        public double Cost { get; set; }
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
+
+        public double Cost
+        {
+            get { return _cost; }
+            set { _cost = value; }
+        }
 
         public double HowMuch()
         {
-            double walkingFee = 50.00;
-            if (Breed.ToLower() == "dog")
-                return Cost + walkingFee;
-            else
-                return Cost;
+            return Cost;
+        }
+    }
+
+    public class Dog : Animal
+    {
+        public double HowMuch()
+        {
+            double walkingFee = 50.0;
+            return Cost + walkingFee;
+        }
+    }
+
+    public class Cat : Animal
+    {
+        public double HowMuch()
+        {
+            return Cost;
         }
     }
 
@@ -28,25 +48,40 @@ namespace AnimalApp
     {
         static void Main()
         {
-            // Hayvanları bir listeye ekliyoruz
-            List<Animals> animals = new List<Animals>
+            List<Animal> animals = new List<Animal>
             {
-                new Animals { Name = "Leo", Breed = "Dog", Cost = 300.00 },
-                new Animals { Name = "Molly", Breed = "Cat", Cost = 300.00 },
-                new Animals { Name = "Casey", Breed = "Cat", Cost = 300.00 },
-                new Animals { Name = "Gorlock", Breed = "Dog", Cost = 300.00 }
+                new Dog { Name = "Leo", Cost = 300 },
+                new Cat { Name = "Molly", Cost = 300 },
+                new Cat { Name = "Casey", Cost = 300 },
+                new Dog { Name = "Gorlock", Cost = 300 }
             };
 
-            // Her hayvanın toplam maliyetini yazdır
-            foreach (var animal in animals)
+            foreach (Animal animal in animals)
             {
-                Console.WriteLine($"Animal: {animal.Name}, Breed: {animal.Breed}, Total Cost = ${animal.HowMuch()}");
+                if (animal is Dog)
+                {
+                    Dog d = (Dog)animal;
+                    Console.WriteLine($"{d.Name} total cost: {d.HowMuch()}");
+                }
+                else if (animal is Cat)
+                {
+                    Cat c = (Cat)animal;
+                    Console.WriteLine($"{c.Name} total cost: {c.HowMuch()}");
+                }
             }
 
-            // LINQ ile ortalama toplam maliyeti hesapla
-            double averageCost = animals.Average(a => a.HowMuch());
+            double dogAverage = animals
+                .Where(a => a is Dog)
+                .Cast<Dog>()
+                .Average(d => d.HowMuch());
 
-            Console.WriteLine($"\nAverage total cost of animals: ${averageCost}");
+            double catAverage = animals
+                .Where(a => a is Cat)
+                .Cast<Cat>()
+                .Average(c => c.HowMuch());
+
+            Console.WriteLine("\nAverage Dog Cost: " + dogAverage);
+            Console.WriteLine("Average Cat Cost: " + catAverage);
         }
     }
 }
