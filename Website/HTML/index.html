@@ -3,41 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Benim Fotoğraf Sitem</title>
-    
+    <title>Fotoğraf Galerisi</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         body {
-            background-color: #121212; /* Koyu arka plan */
+            background-color: #000000; /* Tam siyah arka plan */
             color: white;
             font-family: sans-serif;
+            overflow: hidden; /* Sayfa kaydırmasını engeller, tam odak sağlar */
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .container {
-            max-width: 900px; /* Sitenin genişliği */
-            margin-top: 50px;
+            max-width: 100%;
+            width: 100%;
         }
         .carousel-item img {
-            height: 500px;       /* Resim yüksekliği */
-            object-fit: cover;   /* Resmi kutuya sığdırır, sündürmez */
-            border-radius: 15px; /* Köşeleri yuvarlatır */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Gölge efekti */
+            height: 90vh;            /* Ekranın neredeyse tamamını kaplar */
+            object-fit: contain;     /* Dikey fotoları bozmadan sığdırır */
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            font-weight: 300;
-            letter-spacing: 2px;
+        /* Alt kısımdaki çizgilerin yerini biraz daha aşağı aldık */
+        .carousel-indicators {
+            bottom: -30px;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>FOTOĞRAF GALERİM</h1>
+        <div id="benimSliderim" class="carousel slide" data-bs-ride="false">
 
-        <div id="benimSliderim" class="carousel slide" data-bs-ride="carousel">
-            
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#benimSliderim" data-bs-slide-to="0" class="active"></button>
                 <button type="button" data-bs-target="#benimSliderim" data-bs-slide-to="1"></button>
@@ -45,31 +47,15 @@
             </div>
 
             <div class="carousel-inner">
-                
                 <div class="carousel-item active">
-                    <img src="foto1.jpeg" class="d-block w-100" alt="Manzara 1">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Doğa Manzarası</h5>
-                        <p>Harika bir dağ görünümü.</p>
-                    </div>
+                    <img src="{{ url_for('static', filename='foto1.jpeg') }}" class="d-block">
                 </div>
-
                 <div class="carousel-item">
-                    <img src="foto2.jpeg" class="d-block w-100" alt="Manzara 2">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Nehir Kenarı</h5>
-                        <p>Huzurlu bir gün batımı.</p>
-                    </div>
+                    <img src="{{ url_for('static', filename='foto2.jpeg') }}" class="d-block">
                 </div>
-
                 <div class="carousel-item">
-                    <img src="foto3.jpeg" class="d-block w-100" alt="Manzara 3">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Kış Mevsimi</h5>
-                        <p>Karlı dağlar ve soğuk hava.</p>
-                    </div>
+                    <img src="{{ url_for('static', filename='foto3.jpeg') }}" class="d-block">
                 </div>
-
             </div>
 
             <button class="carousel-control-prev" type="button" data-bs-target="#benimSliderim" data-bs-slide="prev">
@@ -81,8 +67,22 @@
                 <span class="visually-hidden">İleri</span>
             </button>
         </div>
-        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Klavye ok tuşları kontrolü
+        document.addEventListener('keydown', function(event) {
+            const myCarousel = document.getElementById('benimSliderim');
+            const carousel = bootstrap.Carousel.getOrCreateInstance(myCarousel);
+
+            if (event.key === 'ArrowLeft') {
+                carousel.prev();
+            } else if (event.key === 'ArrowRight') {
+                carousel.next();
+            }
+        });
+    </script>
 </body>
 </html>
